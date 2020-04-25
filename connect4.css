@@ -1,46 +1,154 @@
 /* game board table */
 
 #board td {
-  width: 50px;
-  height: 50px;
-  border: solid 1px #666;
+	width: 50px;
+	height: 50px;
+	border: solid 1px #666;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
   /* TODO: make into circles */
-  margin: 5px;
-  width: 80%;
-  height: 80%;
+	width: 94%;
+	height: 95%;
   border-radius: 50%;
+  border: solid 2px rgb(25, 18, 29);
+  animation-name: slidein;
+  animation-duration: 1s;
 }
+
+td {
+  margin: auto;
+  border-radius: 50%;
+  border: solid 2px rgb(25, 18, 29);
+  background-color: black;
+  position: relateive;
+}
+
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
 .p1 {
-  background-color: red;
+  background: linear-gradient(-45deg, #ee7752, #d1794f, #f3d54d, #ecad25);
+	background-size: 400% 400%;
+	animation: gradient 10s ease infinite;
 }
 
 .p2 {
-  background-color: blue;
+  background: linear-gradient(-45deg, #52eead, #64ebcd, #4db6f3, #1882da);
+	background-size: 400% 400%;
+	animation: gradient 10s ease infinite;
+}
+
+.winner {
+  transition: background-color 1000ms;
 }
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
   border: dashed 1px lightgray;
+  background-color: lightgoldenrodyellow;
+  
 }
 
-#column-top td:hover {
-  background-color: gold;
-}
+
 
 body {
-  height: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #ee9c83, #f36ea1, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 25s ease infinite;
+}
+
+h1 {
+	text-align: center;
+  font-size: 5rem;
+  color: #283966;
+}
+
+table {
+	margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+  height: 50vh;
+}
+
+.legendlogo {
+  margin: 5px;
+	width: 20px;
+	height: 20px;
+  border-radius: 50%;
+  display:inline-block;
+}
+
+.legendText {
+  width: 100px;
+  height: 20px;
+  margin: 5px;
+  display:inline-block;
+}
+
+#legend {
+  
+	margin-right: auto;
+  margin-left: auto;
+  border: solid 5px black;
+  border-radius: 10%;
+  margin-bottom: 20px;
+}
+
+#control {
+	margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 15px;
 }
 
 #game {
-  margin: auto;
-  width: 100%;
-  border: 3px solid green;
-  padding: 10px;
+  text-align: center;
+}
+
+#restart {
+	box-shadow:inset 0px 0px 1px -1px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:6px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:22px;
+	font-weight:bold;
+	padding:9px 33px;
+	text-decoration:none;
+	text-shadow:0px 2px 0px #283966;
+}
+#restart:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+@keyframes slidein {
+  from {
+    top:-300px;
+  }
+  to {
+    top: 0px;
+  }
 }

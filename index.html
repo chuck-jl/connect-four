@@ -1,16 +1,33 @@
 <!doctype html>
+
 <head>
   <title>Connect 4</title>
   <link href="connect4.css" rel="stylesheet">
 </head>
+
 <body>
 
-<div id="game">
-  <h1>Connect 4 Game</h1>
-  <table id="board"></table>
-</div>
+  <div id="game">
+    <h1>Connect 4 Game</h1>
+    <div id="control">
+      <button id="restart">Restart</button>
+      <h4 id="currentPlayer">Current Player: Player 1</h4>
+    </div>
+    <div id ="legend">
+      <h4 class= "legendText">
+        Player 1: 
+      </h4>
+      <div class="legendlogo p1"></div>
+      <h4 class= "legendText">
+        Player 2: 
+      </h4>
+      <div class="legendlogo p2"></div>
+    </div>
+    <table id="board"></table>
+  </div>
 
-<script src="connect4.js"></script>
+  <script src="connect4.js"></script>
 
 </body>
+
 </html>

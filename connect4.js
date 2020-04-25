@@ -7,10 +7,11 @@
 
 const WIDTH = 7;
 const HEIGHT = 6;
-
+const htmlBoard = document.querySelector("#board");
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
-
+const currentPlayer = document.querySelector("#currentPlayer");
+let intervalId;
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
@@ -23,13 +24,17 @@ function makeBoard() {
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
-  const htmlBoard = document.querySelector("#board");
   // TODO: add comment for this code
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
-
+  top.addEventListener("mouseover", function(e){
+    e.target.classList.add(`p${currPlayer}`)
+  });
+  top.addEventListener("mouseout", function(e){
+    e.target.classList="";
+  });
+  
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
@@ -80,12 +85,16 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  const tableHead = document.querySelector("#column-top");
+  tableHead.removeEventListener("click",handleClick);
   alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
+  evt.target.classList="";
+
   // get x from ID of clicked cell\
   let x = +evt.target.id;
   // get next spot in column (if none, ignore click)
@@ -100,6 +109,18 @@ function handleClick(evt) {
   board[y][x]=currPlayer;
   // check for win
   if (checkForWin()) {
+    let winner = document.querySelectorAll(`.p${currPlayer}`);
+    winner = Array.from(winner);
+    winner.forEach(function(val){
+      val.classList.toggle("winner");
+      val.classList.toggle(`p${currPlayer}`);
+    })
+    intervalId = setInterval(function(){
+      let tmp = randomRGB();
+      winner.forEach(function(val){
+        val.style.backgroundColor= tmp;
+      })
+    },1000)
     return endGame(`Player ${currPlayer} won!`);
   }
   // check for tie
@@ -118,6 +139,8 @@ function handleClick(evt) {
   }else{
     currPlayer=1;
   }
+  
+  currentPlayer.innerText =  `Current Player: Player ${currPlayer}`;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -153,5 +176,34 @@ function checkForWin() {
   }
 }
 
+//function to restart the game
+const restartBtn = document.querySelector("#restart");
+restartBtn.addEventListener("click",function(el){
+  htmlBoard.innerHTML="";
+  makeBoard();
+  makeHtmlBoard();
+  clearInterval(intervalId);
+  
+  let winner = document.querySelectorAll(`.winner`);
+    winner = Array.from(winner);
+    winner.forEach(function(val){
+      val.classList.remove("winner");
+      val.classList.add(`p${currPlayer}`);
+      val.style.backgroundColor="";
+    })
+  currPlayer=1;
+  currentPlayer.innerText =  `Current Player: Player ${currPlayer}`;
+})
+
 makeBoard();
 makeHtmlBoard();
+
+//random RGB color generator 
+function randomRGB(){
+  const r = Math.floor(Math.random()*256);
+  const g = Math.floor(Math.random()*256);
+  const b = Math.floor(Math.random()*256);
+  return `rgb(${r},${g},${b})`
+}
+
+//hover on table head
